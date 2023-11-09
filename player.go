@@ -1,13 +1,14 @@
 package main
 
 type Player struct {
+	name      string
 	team      string
 	weapon    IWeapon
 	equipment IEquipment
 }
 
-func (p *Player) SetTeam(name string) {
-	p.team = name
+func (p *Player) GetName() string {
+	return p.name
 }
 
 func (p *Player) GetTeam() string {

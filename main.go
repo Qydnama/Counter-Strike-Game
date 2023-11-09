@@ -11,6 +11,7 @@ var gameInstance = GetGameInstance()
 func main() {
 	var input int
 	// Create Terrorist fabric by Using Abstract Factory
+
 	afTerrorist, err := GetAbstractFactory("terrorist")
 	if err != nil {
 		panic("Terrorist factory can't create.")
@@ -30,23 +31,30 @@ func main() {
 	gameInstance.register(observerFirst)
 	gameInstance.register(observerSecond)
 
+	// Creating Terrorist by Factory and Notify about it to Observers
 	color.Set(color.FgYellow, color.BgHiCyan, color.Bold, color.Underline)
 	fmt.Print("You are playing \"Bomb Defuse game!\"(BABAH:) ahahhaha)")
 	color.Unset()
 	fmt.Println("\n")
-	// Creating Terrorist by Factory and Notify about it to Observers
-	player1, err := GetPlayer("terrorist")
+	var name string
+	color.Set(color.FgMagenta)
+	fmt.Print("Input Terrorist Name: ")
+	fmt.Scan(&name)
+	player1, err := GetPlayer("terrorist", name)
 	if err != nil {
 		panic("Terrorist can't be created")
 	}
-	gameInstance.notifyAll(fmt.Sprintf("%s was created.\n", player1.GetTeam()))
 
 	// Creating Counter-Terrorist by Factory and Notify about it to Observers
-	player2, err := GetPlayer("counter-terrorist")
+	gameInstance.notifyAll(fmt.Sprintf("%s-%s was created.\n", player1.GetTeam(), player1.GetName()))
+	fmt.Print("Input Counter-Terrorist Name: ")
+	fmt.Scan(&name)
+	player2, err := GetPlayer("counter-terrorist", name)
 	if err != nil {
 		panic("Counter-Terrorist can't be created")
 	}
-	gameInstance.notifyAll(fmt.Sprintf("%s was created.\n", player1.GetTeam()))
+	gameInstance.notifyAll(fmt.Sprintf("%s-%s was created.\n", player2.GetTeam(), player2.GetName()))
+	color.Unset()
 
 	// Choosing Weapon for Terrorist
 	//WEAPONTerror:
@@ -101,14 +109,14 @@ func main() {
 	//}
 
 	mess, ok := player1.Kill() // Attempt to kill opponent
-	gameInstance.notifyAll(fmt.Sprintf("%s %s", player1.GetTeam(), mess))
-	fmt.Printf("%s %s\n", player1.GetTeam(), mess)
+	gameInstance.notifyAll(fmt.Sprintf("%s-%s: %s :%s-%s\n", player1.GetTeam(), player1.GetName(), mess, player2.GetTeam(), player2.GetName()))
+	fmt.Printf("%s-%s: %s :%s-%s\n", player1.GetTeam(), player1.GetName(), mess, player2.GetTeam(), player2.GetName())
 	if ok {
 		fmt.Printf("Terrorist WON!!!\n  %s", mess)
 		return
 	}
 	player2.Kill() // Attempt to kill opponent
-	gameInstance.notifyAll(fmt.Sprintf("Counter Terrorist %s", mess))
+	gameInstance.notifyAll(fmt.Sprintf("%s-%s: %s :%s-%s\n", player1.GetTeam(), player1.GetName(), mess, player2.GetTeam(), player2.GetName()))
 	fmt.Printf("%s %s\n", player1.GetTeam(), mess)
 	if ok {
 		fmt.Printf("Counter Terrorist WON!!!\n  %s", mess)

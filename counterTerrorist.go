@@ -4,9 +4,9 @@ type CounterTerrorist struct {
 	Player
 }
 
-func newCounterTerrorist() IPlayer {
+func newCounterTerrorist(name string) IPlayer {
 	temp := &CounterTerrorist{
-		Player: Player{team: "Counter-Terrorist"}}
+		Player: Player{name: name, team: "Counter-Terrorist"}}
 	gameInstance.Players = append(gameInstance.Players, temp)
 	return temp
 }

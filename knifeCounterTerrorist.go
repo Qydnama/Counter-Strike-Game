@@ -7,15 +7,15 @@ import (
 	"time"
 )
 
-type Knife struct {
+type KnifeCounterTerrorist struct {
 }
 
-func (k *Knife) Kill() (string, bool) {
+func (k *KnifeCounterTerrorist) Kill() (string, bool) {
 	//fmt.Println("Using a knife as a weapon")
 	rand.Seed(time.Now().UnixNano())
 	randomNumber1 := rand.Intn(7) + 1
-	color.Set(color.FgCyan)
-	fmt.Print("Write number between 1 and 7(to shoot the Counter-Terrorist: ")
+	color.Set(color.FgBlue)
+	fmt.Print("Write number between 1 and 7(to shoot the Terrorist): ")
 	var side int
 LOOP:
 	for {

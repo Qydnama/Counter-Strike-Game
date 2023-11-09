@@ -12,7 +12,7 @@ func (t *CounterTerroristFactory) createPistol() IWeapon {
 }
 
 func (t *CounterTerroristFactory) createKnife() IWeapon {
-	return &Knife{}
+	return &KnifeCounterTerrorist{}
 }
 
 func (t *CounterTerroristFactory) createEquipment() IEquipment {

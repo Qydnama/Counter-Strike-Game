@@ -14,7 +14,7 @@ func (t *TerroristFactory) createPistol() IWeapon {
 }
 
 func (t *TerroristFactory) createKnife() IWeapon {
-	return &Knife{}
+	return &KnifeTerrorist{}
 }
 
 func (t *TerroristFactory) createEquipment() IEquipment {

@@ -15,7 +15,7 @@ func (a *USP) Kill() (string, bool) {
 	randomNumber1 := rand.Intn(5) + 1
 	color.Set(color.FgBlue)
 	var side int
-	fmt.Print("Write number between 1 and 5(to shoot the Counter-Terrorist): ")
+	fmt.Print("Write number between 1 and 5(to shoot the Terrorist): ")
 LOOP:
 	for {
 		fmt.Scan(&side)
