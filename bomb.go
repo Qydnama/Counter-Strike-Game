@@ -18,7 +18,7 @@ type Bomb struct {
 func (b *Bomb) UseEquipment() {
 	color.Set(color.FgRed)
 	fmt.Println("Planting the bomb")
-	b.Seconds = 8
+	b.Seconds = 5
 	var code string
 LOOP1:
 	for {
