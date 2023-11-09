@@ -16,7 +16,7 @@ func main() {
 	if err != nil {
 		panic("Terrorist factory can't create.")
 	}
-	// Create Counter Terrorist fabric by Using Abstract Factory
+	// Create Counter-Terrorist fabric by Using Abstract Factory
 	afCounterTerrorist, err := GetAbstractFactory("counterTerrorist")
 	if err != nil {
 		panic("Counter Terrorist factory can't create.")
@@ -109,15 +109,15 @@ func main() {
 	//}
 
 	mess, ok := player1.Kill() // Attempt to kill opponent
-	gameInstance.notifyAll(fmt.Sprintf("%s-%s: %s :%s-%s\n", player1.GetTeam(), player1.GetName(), mess, player2.GetTeam(), player2.GetName()))
-	fmt.Printf("%s-%s: %s :%s-%s\n", player1.GetTeam(), player1.GetName(), mess, player2.GetTeam(), player2.GetName())
+	gameInstance.notifyAll(fmt.Sprintf("%s %s: %s :%s %s\n", player1.GetTeam(), player1.GetName(), mess, player2.GetTeam(), player2.GetName()))
+	fmt.Printf("%s %s: %s :%s %s\n", player1.GetTeam(), player1.GetName(), mess, player2.GetTeam(), player2.GetName())
 	if ok {
 		fmt.Printf("Terrorist WON!!!\n  %s", mess)
 		return
 	}
 	player2.Kill() // Attempt to kill opponent
-	gameInstance.notifyAll(fmt.Sprintf("%s-%s: %s :%s-%s\n", player2.GetTeam(), player2.GetName(), mess, player1.GetTeam(), player1.GetName()))
-	fmt.Printf("%s-%s: %s :%s-%s\n", player2.GetTeam(), player2.GetName(), mess, player1.GetTeam(), player1.GetName())
+	gameInstance.notifyAll(fmt.Sprintf("%s %s: %s :%s %s\n", player2.GetTeam(), player2.GetName(), mess, player1.GetTeam(), player1.GetName()))
+	fmt.Printf("%s %s: %s :%s %s\n", player2.GetTeam(), player2.GetName(), mess, player1.GetTeam(), player1.GetName())
 	if ok {
 		fmt.Printf("Counter Terrorist WON!!!\n  %s", mess)
 		return
