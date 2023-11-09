@@ -117,7 +117,7 @@ func main() {
 	}
 	player2.Kill() // Attempt to kill opponent
 	gameInstance.notifyAll(fmt.Sprintf("%s-%s: %s :%s-%s\n", player2.GetTeam(), player2.GetName(), mess, player1.GetTeam(), player1.GetName()))
-	fmt.Printf("%s %s\n", player1.GetTeam(), mess)
+	fmt.Printf("%s-%s: %s :%s-%s\n", player2.GetTeam(), player2.GetName(), mess, player1.GetTeam(), player1.GetName())
 	if ok {
 		fmt.Printf("Counter Terrorist WON!!!\n  %s", mess)
 		return
