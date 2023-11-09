@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"strconv"
 )
 
 type DefuseKitStrategy struct {
-	Bomb  *BombStrategy
+	Bomb  *Bomb
 	Exist bool
 }
 
 func (e *DefuseKitStrategy) UseEquipment() {
+	color.Set(color.FgBlue)
 	if e.Exist {
 		fmt.Println("Using the defuse kit")
 	} else {
@@ -31,14 +33,15 @@ func (e *DefuseKitStrategy) UseEquipment() {
 		if codeInt == bombCode {
 			if !e.Bomb.babah {
 				e.Bomb.timer.Stop()
-				fmt.Println("BombStrategy was defused\nCounter-Terrorist WON!!!")
+				fmt.Println("Counter-Terrorist WON!!!\n  Bomb was defused")
+				color.Unset()
 				return
 			} else {
-				fmt.Println("BombStrategy was bababahbhashdhsaklfhio asncirwnurioasnfo jsakoaj\nTerrorist WON!!!")
+				color.Unset()
 				return
 			}
 		} else if e.Bomb.babah {
-			fmt.Println("BombStrategy was bababahbhashdhsaklfhio asncirwnurioasnfo jsakoaj YOu lose the game\nTerrorist WON!!!")
+			color.Unset()
 			return
 		}
 	}

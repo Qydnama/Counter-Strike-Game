@@ -4,4 +4,5 @@ package main
 type IObserver interface {
 	update(string)
 	getID() string
+	getBrainInformation()
 }

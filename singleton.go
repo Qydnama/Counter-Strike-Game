@@ -1,13 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"sync"
 )
-
-type GameInstance struct {
-	Players []IPlayer
-}
 
 var mu = &sync.Mutex{}
 
@@ -18,13 +13,13 @@ func GetGameInstance() *GameInstance {
 		mu.Lock()
 		defer mu.Unlock()
 		if instance == nil {
-			fmt.Println("Singleton: Creating Players now.")
+			//fmt.Println("Singleton: Creating Players now.")
 			instance = &GameInstance{}
-		} else {
-			fmt.Println("Players already created.")
+			//} else {
+			//	fmt.Println("Players already created.")
 		}
-	} else {
-		fmt.Println("Players already created.")
+		//} else {
+		//	fmt.Println("Players already created.")
 	}
 
 	return instance

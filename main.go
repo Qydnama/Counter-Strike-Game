@@ -2,95 +2,122 @@ package main
 
 import (
 	"fmt"
+	"github.com/AlecAivazis/survey/v2"
+	"github.com/fatih/color"
 )
 
 var gameInstance = GetGameInstance()
 
 func main() {
 	var input int
+	// Create Terrorist fabric by Using Abstract Factory
+	afTerrorist, err := GetAbstractFactory("terrorist")
+	if err != nil {
+		panic("Terrorist factory can't create.")
+	}
+	// Create Counter Terrorist fabric by Using Abstract Factory
+	afCounterTerrorist, err := GetAbstractFactory("counterTerrorist")
+	if err != nil {
+		panic("Counter Terrorist factory can't create.")
+
+	}
+
+	// Users were born)
 	observerFirst := &User{id: "1"}
 	observerSecond := &User{id: "2"}
-	var terrorist IPlayer
-	var cterrorist IPlayer
-	fmt.Println("You are playing bomb Defuse game!")
-	fmt.Print("First you are playing for Terrorist")
 
-	terrorist, err := GetTerrorist()
+	// Users Added to the Match Like Observers
+	gameInstance.register(observerFirst)
+	gameInstance.register(observerSecond)
+
+	color.Set(color.FgYellow, color.BgHiCyan, color.Bold, color.Underline)
+	fmt.Print("You are playing \"Bomb Defuse game!\"(BABAH:) ahahhaha)")
+	color.Unset()
+	fmt.Println("\n")
+	// Creating Terrorist by Factory and Notify about it to Observers
+	player1, err := GetPlayer("terrorist")
 	if err != nil {
 		panic("Terrorist can't be created")
 	}
-	bomb := &BombStrategy{}
-	terrorist.SetEquipmentStrategy(bomb)
-	fmt.Println(terrorist.GetTeam())
-	terrorist.register(observerFirst)
-	terrorist.register(observerSecond)
-	terrorist.updateAvailability()
+	gameInstance.notifyAll(fmt.Sprintf("%s was created.\n", player1.GetTeam()))
 
-	//to check if players exists
-	GetGameInstance()
-
-	fmt.Println("Choose a weapon (1)-Knife (2)-Gun (for Terrorist)")
-	fmt.Print("Your Input: ")
-	fmt.Scanln(&input)
-
-	switch input {
-	case 1:
-		knifeStrategy := &KnifeStrategy{}
-		terrorist.SetWeaponStrategy(knifeStrategy)
-	case 2:
-		gunStrategy := &GunStrategy{}
-		terrorist.SetWeaponStrategy(gunStrategy)
-	default:
-		panic("Wrong weapon type choosed")
-	}
-
-	cterrorist, err = GetCounterTerrorist()
+	// Creating Counter-Terrorist by Factory and Notify about it to Observers
+	player2, err := GetPlayer("counter-terrorist")
 	if err != nil {
 		panic("Counter-Terrorist can't be created")
 	}
+	gameInstance.notifyAll(fmt.Sprintf("%s was created.\n", player1.GetTeam()))
 
-	fmt.Println(cterrorist.GetTeam())
-	cterrorist.register(observerFirst)
-	cterrorist.register(observerSecond)
-	cterrorist.updateAvailability()
-	cterrorist.GetTeam()
-
-	fmt.Println("Choose a weapon (1)-Knife (2)-Gun (for Counter-Terrorist)")
-	fmt.Print("Your Input: ")
-	fmt.Scanln(&input)
+	// Choosing Weapon for Terrorist
+	//WEAPONTerror:
+	//	for {
+	color.Set(color.FgRed)
+	//fmt.Print("Your Input: ")
+	prompt := &survey.Select{
+		Message: "Terrorist is choosing the weapon",
+		Options: []string{"Rifle", "Pistol", "Knife"},
+	}
+	survey.AskOne(prompt, &input)
+	color.Unset()
 
 	switch input {
+	case 0:
+		player1.SetWeaponStrategy(afTerrorist.createRifle())
 	case 1:
-		knifeStrategy := &KnifeStrategy{}
-		cterrorist.SetWeaponStrategy(knifeStrategy)
+		player1.SetWeaponStrategy(afTerrorist.createPistol())
 	case 2:
-		gunStrategy := &GunStrategy{}
-		cterrorist.SetWeaponStrategy(gunStrategy)
-	default:
-		panic("Wrong weapon type choosed")
+		player1.SetWeaponStrategy(afTerrorist.createKnife())
+		//default:
+		//	continue
 	}
+	//	break WEAPONTerror
+	//}
 
-	fmt.Println("Buy a Defuse Kit?:  (1)-Yes (2)-No  (for Counter-Terrorist)")
-	fmt.Print("Your Input: ")
-	fmt.Scanln(&input)
+	// Choosing Weapon for Counter-Terrorist
+	//WEAPONCTerrorst:
+	//	for {
+	color.Set(color.FgBlue)
+	prompt = &survey.Select{
+		Message: "Counter Terrorist choose a weapon:",
+		Options: []string{"Rifle", "Pistol", "Knife"},
+	}
+	survey.AskOne(prompt, &input)
+	color.Unset()
 
 	switch input {
+	case 0:
+		rifle := afCounterTerrorist.createRifle()
+		player2.SetWeaponStrategy(rifle)
 	case 1:
-		defuseKit := &DefuseKitStrategy{Exist: true}
-		cterrorist.SetEquipmentStrategy(defuseKit)
+		pistol := afCounterTerrorist.createPistol()
+		player2.SetWeaponStrategy(pistol)
 	case 2:
-		defuseKit := &DefuseKitStrategy{Exist: false}
-		cterrorist.SetEquipmentStrategy(defuseKit)
-	default:
-		panic("Wrong symbol entered")
+		knife := afCounterTerrorist.createKnife()
+		player2.SetWeaponStrategy(knife)
+		//default:
+		//	continue
+	}
+	//	break WEAPONCTerrorst
+	//}
+
+	mess, ok := player1.Kill() // Attempt to kill opponent
+	gameInstance.notifyAll(fmt.Sprintf("%s %s", player1.GetTeam(), mess))
+	fmt.Printf("%s %s\n", player1.GetTeam(), mess)
+	if ok {
+		fmt.Printf("Terrorist WON!!!\n  %s", mess)
+		return
+	}
+	player2.Kill() // Attempt to kill opponent
+	gameInstance.notifyAll(fmt.Sprintf("Counter Terrorist %s", mess))
+	fmt.Printf("%s %s\n", player1.GetTeam(), mess)
+	if ok {
+		fmt.Printf("Counter Terrorist WON!!!\n  %s", mess)
+		return
 	}
 
-	printDetailss(terrorist)
+	player1.SetEquipmentStrategy(afTerrorist.createEquipment())
+	player2.SetEquipmentStrategy(afCounterTerrorist.createEquipment())
 
-}
-
-func printDetailss(p IPlayer) {
-	fmt.Println("Someone shooting at you!")
-	p.UseWeapon()
-	fmt.Println("You are dead!")
+	player1.UseEquipment()
+	player2.UseEquipment()
 }

@@ -1,5 +1,5 @@
 package main
 
 type IWeapon interface {
-	UseWeapon()
+	Kill() (string, bool)
 }

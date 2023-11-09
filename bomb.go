@@ -2,21 +2,23 @@ package main
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"strconv"
 	"strings"
 	"time"
 )
 
-type BombStrategy struct {
+type Bomb struct {
 	babah   bool
 	Code    int
 	Seconds time.Duration
 	timer   *time.Timer
 }
 
-func (b *BombStrategy) UseEquipment() {
+func (b *Bomb) UseEquipment() {
+	color.Set(color.FgRed)
 	fmt.Println("Planting the bomb")
-
+	b.Seconds = 8
 	var code string
 LOOP1:
 	for {
@@ -36,14 +38,16 @@ LOOP1:
 	timer := time.NewTimer(b.Seconds * time.Second)
 	b.timer = timer
 
-	go func(b *BombStrategy) {
+	go func(b *Bomb) {
 		for {
 			select {
 			case _ = <-timer.C:
 				b.babah = true
-				fmt.Println("BombStrategy was exploaded(vzarvalos)(babah koroche).\nTerrorist WON!!!")
+				color.Set(color.FgRed)
+				fmt.Println("Bomb was exploaded(vzarvalos)(babah koroche).\nTerrorist WON!!!")
+				color.Unset()
 			}
 		}
 	}(b)
-
+	color.Unset()
 }
