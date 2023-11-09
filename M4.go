@@ -15,7 +15,7 @@ func (a *M4) Kill() (string, bool) {
 	rand.Seed(time.Now().UnixNano())
 	randomNumber1 := rand.Intn(3) + 1
 	var side int
-	fmt.Print("Input number between 1 and 3(to shoot the Terrorist): ")
+	fmt.Print("Input number between 1 and 3 (shooting to the Terrorist): ")
 LOOP:
 	for {
 		fmt.Scan(&side)

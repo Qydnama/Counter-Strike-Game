@@ -15,7 +15,7 @@ func (a *AK47) Kill() (string, bool) {
 	rand.Seed(time.Now().UnixNano())
 	color.Set(color.FgHiRed)
 	randomNumber1 := rand.Intn(3) + 1
-	fmt.Print("Write number between 1 and 3 (to shoot the Counter-Terrorist): ")
+	fmt.Print("Write number between 1 and 3 (shooting to the Counter-Terrorist): ")
 	var side int
 LOOP:
 	for {

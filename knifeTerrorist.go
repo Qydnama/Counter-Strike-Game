@@ -15,7 +15,7 @@ func (k *KnifeTerrorist) Kill() (string, bool) {
 	rand.Seed(time.Now().UnixNano())
 	randomNumber1 := rand.Intn(7) + 1
 	color.Set(color.FgRed)
-	fmt.Print("Write number between 1 and 7 (to shoot the Counter-Terrorist): ")
+	fmt.Print("Write number between 1 and 7 (shooting to the Counter-Terrorist): ")
 	var side int
 LOOP:
 	for {
