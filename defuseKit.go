@@ -7,20 +7,14 @@ import (
 )
 
 type DefuseKitStrategy struct {
-	Bomb  *Bomb
-	Exist bool
+	Bomb *Bomb
 }
 
 func (e *DefuseKitStrategy) UseEquipment() {
 	color.Set(color.FgBlue)
-	if e.Exist {
-		fmt.Println("Using the defuse kit")
-	} else {
-		fmt.Println("Without defuse kit")
+	fmt.Println("Using the defuse kit")
 
-	}
 	bombCode := e.Bomb.Code
-	fmt.Println("BombCode", bombCode)
 	var code string
 
 	for {

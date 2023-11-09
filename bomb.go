@@ -44,7 +44,7 @@ LOOP1:
 			case _ = <-timer.C:
 				b.babah = true
 				color.Set(color.FgRed)
-				fmt.Println("Bomb was exploaded(vzarvalos)(babah koroche).\nTerrorist WON!!!")
+				fmt.Println("\nBomb was exploaded(vzarvalos)(babah koroche).\nTerrorist WON!!!")
 				color.Unset()
 			}
 		}
