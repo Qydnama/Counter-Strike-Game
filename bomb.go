@@ -20,12 +20,12 @@ func (b *Bomb) UseEquipment() {
 	fmt.Println("Planting the bomb")
 	b.Seconds = 5
 	var code string
+	fmt.Print("Input code for bomb (10 digit): ")
 LOOP1:
 	for {
-		fmt.Print("Input code for bomb (10 digit): ")
 		fmt.Scan(&code)
 		if len(code) != 10 {
-			fmt.Println("Code must be 10 digit number.")
+			fmt.Print("Code must be 10 digit number: ")
 			continue
 		}
 		codeInt, err := strconv.Atoi(strings.Trim(code, " "))

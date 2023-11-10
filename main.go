@@ -32,21 +32,23 @@ func main() {
 	gameInstance.register(observerSecond)
 
 	// Creating Terrorist by Factory and Notify about it to Observers
-	color.Set(color.FgYellow, color.BgHiCyan, color.Bold, color.Underline)
+	color.Set(color.FgYellow, color.Bold, color.Underline)
 	fmt.Print("You are playing \"Bomb Defuse game!\"(BABAH:) ahahhaha)")
 	color.Unset()
 	fmt.Println("\n")
 	var name string
-	color.Set(color.FgMagenta)
+	color.Set(color.FgRed)
 	fmt.Print("Input Terrorist Name: ")
 	fmt.Scan(&name)
 	player1, err := GetPlayer("terrorist", name)
 	if err != nil {
 		panic("Terrorist can't be created")
 	}
+	color.Unset()
 
 	// Creating Counter-Terrorist by Factory and Notify about it to Observers
 	gameInstance.notifyAll(fmt.Sprintf("%s-%s was created.\n", player1.GetTeam(), player1.GetName()))
+	color.Set(color.FgBlue)
 	fmt.Print("Input Counter-Terrorist Name: ")
 	fmt.Scan(&name)
 	player2, err := GetPlayer("counter-terrorist", name)
