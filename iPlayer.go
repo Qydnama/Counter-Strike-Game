@@ -7,7 +7,6 @@ type IPlayer interface {
 	GetTeam() string
 	SetWeaponStrategy(strategy IWeapon)
 	Kill() (string, bool)
-	GetWeaponStrategy() IWeapon
 	SetEquipmentStrategy(strategy IEquipment)
 	UseEquipment()
 }

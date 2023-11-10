@@ -23,10 +23,6 @@ func (p *Player) Kill() (string, bool) {
 	return p.weapon.Kill()
 }
 
-func (p *Player) GetWeaponStrategy() IWeapon {
-	return p.weapon
-}
-
 func (p *Player) SetEquipmentStrategy(strategy IEquipment) {
 	p.equipment = strategy
 }
